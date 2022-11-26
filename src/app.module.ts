@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { CompanyModule } from './company/company.module';
 import config from './common/configs/config';
 import { Dialect } from 'sequelize';
+import { Company } from './company/entities/company.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { Dialect } from 'sequelize';
         username: process.env.DATABASE_USERNAME,
         password: process.env.DATABASE_PASSWORD,
         database: process.env.DATABASE_NAME,
-        models: [],
+        models: [Company],
 
         // dialect: configService.get('database.dialect'),
         // host: configService.get('database.host'),
