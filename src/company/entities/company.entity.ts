@@ -20,7 +20,7 @@ export class Company extends Model<Company> {
   @Column({ type: DataTypes.ARRAY(DataTypes.UUID), allowNull: false })
   targetUser: Array<string>;
 
-  @Column({ type: DataTypes.NUMBER, allowNull: false })
+  @Column({ type: DataTypes.INTEGER, allowNull: false })
   amountOfEmployees: EmployeesCount;
 
   @Column({ type: DataTypes.DATE, allowNull: true })
