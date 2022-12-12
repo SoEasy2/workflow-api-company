@@ -10,9 +10,10 @@ export class CompanyService {
     @InjectModel(Company) private readonly companyRepository: typeof Company,
   ) {}
 
-  createCompany(dto: CreateCompanyDto): Promise<Company> {
+  async createCompany(dto: CreateCompanyDto): Promise<Company> {
     try {
-      return this.companyRepository.create(dto);
+      const company = await this.companyRepository.create(dto);
+      return company.toJSON();
     } catch (err) {
       throw new RpcException(JSON.stringify(err));
     }
