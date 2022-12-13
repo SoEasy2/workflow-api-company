@@ -11,18 +11,22 @@ export class CompanyService {
   ) {}
 
   async createCompany(dto: CreateCompanyDto): Promise<Company> {
-    try {
+      const companyDB = await this.companyRepository.findOne({ where: { name: dto.name } });
+      if (companyDB) throw new RpcException('Company with that name already exists ')
       const company = await this.companyRepository.create(dto);
       return company.toJSON();
-    } catch (err) {
-      throw new RpcException(JSON.stringify(err));
-    }
   }
 
   async removeCompany(id: string): Promise<string> {
-    try {
-      await this.companyRepository.destroy({ where: { id } });;
+      await this.companyRepository.destroy({ where: { id } });
       return id;
+  }
+
+  async getCompanyById(id: string): Promise<Company> {
+    try {
+      const company = await this.companyRepository.findOne({ where: { id } })
+      if (!company) throw new RpcException('Company not found');
+      return company.toJSON()
     } catch (err) {
       throw new RpcException(JSON.stringify(err));
     }
