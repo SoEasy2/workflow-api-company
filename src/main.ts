@@ -6,22 +6,21 @@ import { v4 as uuidv4 } from 'uuid';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-      AppModule,
-      {
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            brokers: ['kafka:9092'],
-            clientId: 'comp-service',
-          },
-          consumer: {
-            groupId: `company-consumer-${uuidv4()}`,
-            allowAutoTopicCreation: true,
-          },
+    AppModule,
+    {
+      transport: Transport.KAFKA,
+      options: {
+        client: {
+          brokers: ['kafka:9092'],
+          clientId: 'comp-service',
+        },
+        consumer: {
+          groupId: `company-consumer-${uuidv4()}`,
+          allowAutoTopicCreation: true,
         },
       },
+    },
   );
-
 
   app.useGlobalFilters(new ExceptionFilter());
 
