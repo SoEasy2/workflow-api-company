@@ -26,9 +26,9 @@ export class CompanyService {
   }
 
   async getCompanyById(id: string): Promise<Company> {
-      const company = await this.companyRepository.findOne({ where: { id } });
-      if (!company) throw new RpcException('Company not found');
-      return company.toJSON();
+    const company = await this.companyRepository.findOne({ where: { id } });
+    if (!company) throw new RpcException('Company not found');
+    return company.toJSON();
   }
 
   async getCompanyByCode(code: string): Promise<Company> {

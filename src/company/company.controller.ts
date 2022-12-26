@@ -9,7 +9,9 @@ import {
 } from '@nestjs/microservices';
 import {
   TOPIC_COMPANY_CREATE,
-  TOPIC_COMPANY_CREATE_REPLY, TOPIC_COMPANY_GET_BY_CODE, TOPIC_COMPANY_GET_BY_CODE_REPLY,
+  TOPIC_COMPANY_CREATE_REPLY,
+  TOPIC_COMPANY_GET_BY_CODE,
+  TOPIC_COMPANY_GET_BY_CODE_REPLY,
   TOPIC_COMPANY_GET_BY_ID,
   TOPIC_COMPANY_GET_BY_ID_REPLY,
 } from '../common/constants';
@@ -77,19 +79,17 @@ export class CompanyController {
   }
 
   @MessagePattern(TOPIC_COMPANY_GET_BY_CODE)
-  async getCompanyByCode(
-      @Payload() message: IKafkaMessage<string>
-  ){
+  async getCompanyByCode(@Payload() message: IKafkaMessage<string>) {
     try {
       this.appLogger.log(
-          `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}] -> [getCompanyByCode]`,
+        `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}] -> [getCompanyByCode]`,
       );
       return await this.companyService.getCompanyByCode(message.value);
     } catch (err) {
       this.appLogger.error(
-          err,
-          err.stack,
-          `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}] -> [getCompanyByCode]`,
+        err,
+        err.stack,
+        `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}] -> [getCompanyByCode]`,
       );
       throw new RpcException(JSON.stringify(err));
     }
@@ -98,7 +98,7 @@ export class CompanyController {
   @EventPattern(TOPIC_COMPANY_GET_BY_CODE_REPLY)
   logGetCompanyByCode(): void {
     this.appLogger.log(
-        `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}][SEND] -> [getCompanyByCode]`,
+      `[CompanyController][${TOPIC_COMPANY_GET_BY_CODE}][SEND] -> [getCompanyByCode]`,
     );
   }
 }
