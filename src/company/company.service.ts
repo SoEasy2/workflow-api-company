@@ -3,6 +3,7 @@ import { Company } from './entities/company.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { RpcException } from '@nestjs/microservices';
 import { CreateCompanyDto } from './dto/create-company.dto';
+import { UpdateCompanyDto } from './dto/update-company.dto';
 
 @Injectable()
 export class CompanyService {
@@ -35,5 +36,22 @@ export class CompanyService {
     const company = await this.companyRepository.findOne({ where: { code } });
     if (!company) throw new RpcException('Company not found');
     return company.toJSON();
+  }
+
+  async update(dto: UpdateCompanyDto): Promise<Company>{
+    const { id, ...rest } = dto;
+    const user = await this.companyRepository.findOne({
+      where: { id },
+    });
+    if (!user) {
+      throw new RpcException('Company not found');
+    }
+    await this.companyRepository.update(rest, {
+      where: { id: dto.id },
+    });
+    const companyUpdate = await this.companyRepository.findOne({
+      where: { id },
+    });
+    return companyUpdate.toJSON();
   }
 }
