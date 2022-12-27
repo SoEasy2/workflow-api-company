@@ -13,7 +13,9 @@ import {
   TOPIC_COMPANY_GET_BY_CODE,
   TOPIC_COMPANY_GET_BY_CODE_REPLY,
   TOPIC_COMPANY_GET_BY_ID,
-  TOPIC_COMPANY_GET_BY_ID_REPLY, TOPIC_COMPANY_UPDATE, TOPIC_COMPANY_UPDATE_REPLY,
+  TOPIC_COMPANY_GET_BY_ID_REPLY,
+  TOPIC_COMPANY_UPDATE,
+  TOPIC_COMPANY_UPDATE_REPLY,
 } from '../common/constants';
 import { IKafkaMessage } from '../common/interfaces/kafka-message.interface';
 import { CreateCompanyDto } from './dto/create-company.dto';
@@ -105,18 +107,18 @@ export class CompanyController {
 
   @MessagePattern(TOPIC_COMPANY_UPDATE)
   async companyUpdate(
-      @Payload() message: IKafkaMessage<UpdateCompanyDto>,
+    @Payload() message: IKafkaMessage<UpdateCompanyDto>,
   ): Promise<Company> {
     try {
       this.appLogger.log(
-          `[CompanyController][${TOPIC_COMPANY_UPDATE}] -> [companyUpdate]`,
+        `[CompanyController][${TOPIC_COMPANY_UPDATE}] -> [companyUpdate]`,
       );
       return await this.companyService.update(message.value);
     } catch (err) {
       this.appLogger.error(
-          err,
-          err.stack,
-          `[CompanyController][${TOPIC_COMPANY_UPDATE}] -> [companyUpdate]`,
+        err,
+        err.stack,
+        `[CompanyController][${TOPIC_COMPANY_UPDATE}] -> [companyUpdate]`,
       );
       throw new RpcException(JSON.stringify(err));
     }
@@ -124,7 +126,7 @@ export class CompanyController {
   @EventPattern(TOPIC_COMPANY_UPDATE_REPLY)
   logCompanyUpdate(): void {
     this.appLogger.log(
-        `[CompanyController][${TOPIC_COMPANY_UPDATE}][SEND] -> [companyUpdate]`,
+      `[CompanyController][${TOPIC_COMPANY_UPDATE}][SEND] -> [companyUpdate]`,
     );
   }
 }

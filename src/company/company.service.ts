@@ -38,7 +38,7 @@ export class CompanyService {
     return company.toJSON();
   }
 
-  async update(dto: UpdateCompanyDto): Promise<Company>{
+  async update(dto: UpdateCompanyDto): Promise<Company> {
     const { id, ...rest } = dto;
     const user = await this.companyRepository.findOne({
       where: { id },
