@@ -1,6 +1,7 @@
-import { Column, Model, Table } from 'sequelize-typescript';
+import { Column, HasOne, Model, Table } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 import { EmployeesCount } from '../../shared/enums';
+import { CompanyDetails } from '../../company-details/entities/CompanyDetails.entity';
 
 @Table({ timestamps: true, freezeTableName: true, tableName: 'companies' })
 export class Company extends Model<Company> {
@@ -25,6 +26,9 @@ export class Company extends Model<Company> {
 
   @Column({ type: DataTypes.INTEGER, allowNull: false })
   amountOfEmployees: EmployeesCount;
+
+  @HasOne(() => CompanyDetails)
+  companyDetails: CompanyDetails | null;
 
   @Column({ type: DataTypes.DATE, allowNull: true })
   createdAt: Date;

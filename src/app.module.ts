@@ -8,19 +8,21 @@ import { CompanyModule } from './company/company.module';
 import config from './common/configs/config';
 import { Dialect } from 'sequelize';
 import { Company } from './company/entities/company.entity';
+import { CompanyDetailsModule } from './company-details/company-details.module';
+import { CompanyDetails } from './company-details/entities/CompanyDetails.entity';
 
 @Module({
   imports: [
     SequelizeModule.forRootAsync({
       imports: [ConfigModule, CompanyModule],
       useFactory: (configService: ConfigService) => ({
-        dialect: 'postgres' as Dialect,
-        host: process.env.DATABASE_HOST,
-        port: +process.env.DATABASE_PORT,
-        username: process.env.DATABASE_USERNAME,
-        password: process.env.DATABASE_PASSWORD,
-        database: process.env.DATABASE_NAME,
-        models: [Company],
+        dialect: configService.get<Dialect>('database.dialect'),
+        host: configService.get<string>('database.host'),
+        port: configService.get<number>('database.port'),
+        username: configService.get<string>('database.username'),
+        password: configService.get<string>('database.password'),
+        database: configService.get<string>('database.database'),
+        models: [Company, CompanyDetails],
 
         // dialect: configService.get('database.dialect'),
         // host: configService.get('database.host'),
@@ -37,6 +39,7 @@ import { Company } from './company/entities/company.entity';
     ConfigModule.forRoot({ isGlobal: true, load: [config] }),
     LoggerModule,
     CompanyModule,
+    CompanyDetailsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
