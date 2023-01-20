@@ -4,11 +4,13 @@ import { InjectModel } from '@nestjs/sequelize';
 import { RpcException } from '@nestjs/microservices';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
+import { CompanyDetailsService } from '../company-details/company-details.service';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company) private readonly companyRepository: typeof Company,
+    private readonly companyDetailsService: CompanyDetailsService,
   ) {}
 
   async createCompany(dto: CreateCompanyDto): Promise<Company> {
@@ -18,6 +20,7 @@ export class CompanyService {
     if (companyDB)
       throw new RpcException('Company with that name already exists ');
     const company = await this.companyRepository.create(dto);
+    await this.companyDetailsService.createDetails({ companyId: company.id });
     return company.toJSON();
   }
 

@@ -6,3 +6,8 @@ export const TOPIC_COMPANY_GET_BY_CODE = 'company.getByCode';
 export const TOPIC_COMPANY_GET_BY_CODE_REPLY = 'company.getByCode.reply';
 export const TOPIC_COMPANY_UPDATE = 'company.update';
 export const TOPIC_COMPANY_UPDATE_REPLY = 'company.update.reply';
+
+export const TOPIC_DETAILS_COMPANY_CREATE = 'companyDetails.create';
+export const TOPIC_DETAILS_COMPANY_CREATE_REPLY = 'companyDetails.create.reply';
+export const TOPIC_DETAILS_COMPANY_UPDATE = 'companyDetails.update';
+export const TOPIC_DETAILS_COMPANY_UPDATE_REPLY = 'companyDetails.update.reply';

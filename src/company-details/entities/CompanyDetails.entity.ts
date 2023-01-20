@@ -1,4 +1,11 @@
-import { BelongsTo, Column, ForeignKey, HasOne, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  Column,
+  ForeignKey,
+  HasOne,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 import { EmployeesCount } from '../../shared/enums';
 import { Company } from '../../company/entities/company.entity';
@@ -25,24 +32,28 @@ export class CompanyDetails extends Model<CompanyDetails> {
   @Column({
     type: DataTypes.STRING,
     allowNull: true,
+    defaultValue: null,
   })
   phone: string | null;
 
   @Column({
     type: DataTypes.STRING,
     allowNull: true,
+    defaultValue: null,
   })
   email: string | null;
 
   @Column({
     type: DataTypes.STRING,
     allowNull: true,
+    defaultValue: null,
   })
   address: string | null;
 
   @Column({
     type: DataTypes.STRING,
     allowNull: true,
+    defaultValue: null,
   })
   description: string | null;
 
